@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum Role {
+  SOCIO
+  ADMIN
+}
+
+enum ReservationStatus {
+  ACTIVA
+  CANCELADA
+}
+
+model Member {
+  id           String   @id @default(cuid())
+  nombre       String
+  portal       String
+  planta       String
+  puerta       String
+  username     String   @unique
+  passwordHash String
+  role         Role     @default(SOCIO)
+  createdAt    DateTime @default(now())
+
+  reservations Reservation[]
+}
+
+model Court {
+  id   String @id @default(cuid())
+  name String @unique
+
+  reservations Reservation[]
+}
+
+model Reservation {
+  id          String            @id @default(cuid())
+  date        String // "YYYY-MM-DD" en huso horario Europe/Madrid
+  hour        Int // hora de inicio, 11..20
+  status      ReservationStatus @default(ACTIVA)
+  createdAt   DateTime          @default(now())
+  cancelledAt DateTime?
+
+  courtId  String
+  court    Court  @relation(fields: [courtId], references: [id])
+  memberId String
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@index([date, courtId])
+  @@index([memberId, date])
+}

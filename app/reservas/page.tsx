@@ -47,7 +47,7 @@ export default async function ReservasPage({
       <div className="flex flex-col gap-8">
         {dias.map((fecha) => (
           <section key={fecha}>
-            <h2 className="mb-3 font-medium capitalize">
+            <h2 className="mb-3 font-medium">
               {etiquetaFecha(fecha)}
             </h2>
             <div className="grid grid-cols-2 gap-4">

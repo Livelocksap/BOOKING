@@ -46,7 +46,7 @@ export default async function AdminPage({
                 className="flex items-center justify-between rounded border border-black/10 px-4 py-3 dark:border-white/10"
               >
                 <div>
-                  <p className="font-medium capitalize">
+                  <p className="font-medium">
                     {etiquetaFecha(reserva.date)} · {reserva.court.name} ·{" "}
                     {reserva.hour}:00
                   </p>

@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { getSession, hashPassword } from "@/lib/auth";
+import { PORTALES, PLANTAS, PUERTAS } from "@/lib/vivienda";
 
 export type RegistroState = { error?: string } | undefined;
 
@@ -20,6 +21,13 @@ export async function registrar(
 
   if (!nombre || !portal || !planta || !puerta || !username || !password) {
     return { error: "Rellena todos los campos." };
+  }
+  if (
+    !PORTALES.includes(portal) ||
+    !PLANTAS.includes(planta) ||
+    !PUERTAS.includes(puerta)
+  ) {
+    return { error: "Portal, planta o puerta no son validos." };
   }
   if (password.length < 6) {
     return { error: "La contrasena debe tener al menos 6 caracteres." };

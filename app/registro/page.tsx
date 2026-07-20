@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { registrar } from "./actions";
+import { PORTALES, PLANTAS, PUERTAS } from "@/lib/vivienda";
 
 function Campo(props: {
   id: string;
@@ -28,6 +29,33 @@ function Campo(props: {
   );
 }
 
+function Selector(props: { id: string; label: string; opciones: string[] }) {
+  const { id, label, opciones } = props;
+  return (
+    <div className="flex flex-col gap-1">
+      <label htmlFor={id} className="text-sm font-medium">
+        {label}
+      </label>
+      <select
+        id={id}
+        name={id}
+        required
+        defaultValue=""
+        className="rounded border border-black/15 bg-transparent px-3 py-2 dark:border-white/20"
+      >
+        <option value="" disabled>
+          --
+        </option>
+        {opciones.map((opcion) => (
+          <option key={opcion} value={opcion}>
+            {opcion}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
 export default function RegistroPage() {
   const [state, formAction, pending] = useActionState(registrar, undefined);
 
@@ -40,9 +68,9 @@ export default function RegistroPage() {
       <form action={formAction} className="flex flex-col gap-4">
         <Campo id="nombre" label="Nombre y apellidos" autoComplete="name" />
         <div className="grid grid-cols-3 gap-3">
-          <Campo id="portal" label="Portal" />
-          <Campo id="planta" label="Planta" />
-          <Campo id="puerta" label="Puerta" />
+          <Selector id="portal" label="Portal" opciones={PORTALES} />
+          <Selector id="planta" label="Planta" opciones={PLANTAS} />
+          <Selector id="puerta" label="Puerta" opciones={PUERTAS} />
         </div>
         <Campo id="username" label="Usuario" autoComplete="username" />
         <Campo

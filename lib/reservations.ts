@@ -1,6 +1,11 @@
 import "server-only";
 import { prisma } from "@/lib/db";
-import { esFechaReservable, HORA_INICIO, HORA_FIN } from "@/lib/dates";
+import {
+  esFechaReservable,
+  esHoraPasada,
+  HORA_INICIO,
+  HORA_FIN,
+} from "@/lib/dates";
 
 export class ReservaError extends Error {}
 
@@ -19,6 +24,9 @@ export async function crearReserva(opts: {
   }
   if (hour < HORA_INICIO || hour >= HORA_FIN) {
     throw new ReservaError("Esa franja horaria no existe.");
+  }
+  if (esHoraPasada(date, hour)) {
+    throw new ReservaError("Esa franja ya ha pasado.");
   }
 
   return prisma.$transaction(async (tx) => {

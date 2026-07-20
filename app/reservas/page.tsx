@@ -1,6 +1,11 @@
 import { requireSocio } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { ventanaReservable, horasDisponibles, etiquetaFecha } from "@/lib/dates";
+import {
+  ventanaReservable,
+  horasDisponibles,
+  etiquetaFecha,
+  esHoraPasada,
+} from "@/lib/dates";
 import { reservar, cancelar } from "./actions";
 
 export default async function ReservasPage({
@@ -58,6 +63,18 @@ export default async function ReservasPage({
                       );
                       const esMia = reserva?.memberId === session.memberId;
                       const etiquetaHora = `${hora}:00`;
+                      const pasada = esHoraPasada(fecha, hora);
+
+                      if (!reserva && pasada) {
+                        return (
+                          <div
+                            key={hora}
+                            className="w-full rounded border border-black/10 bg-black/5 px-2 py-1.5 text-center text-sm text-black/40 dark:border-white/10 dark:bg-white/5 dark:text-white/40"
+                          >
+                            {etiquetaHora}
+                          </div>
+                        );
+                      }
 
                       if (!reserva) {
                         return (

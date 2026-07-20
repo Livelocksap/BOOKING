@@ -40,6 +40,21 @@ export function esFechaReservable(fechaISO: string): boolean {
   return ventanaReservable().includes(fechaISO);
 }
 
+/** Hora actual en Europe/Madrid, 0..23. */
+export function horaActualMadrid(): number {
+  const horaTexto = new Intl.DateTimeFormat("en-US", {
+    timeZone: TIME_ZONE,
+    hour: "2-digit",
+    hourCycle: "h23",
+  }).format(new Date());
+  return Number(horaTexto);
+}
+
+/** Una franja ya ha pasado si es hoy y su hora de inicio ya se alcanzo. */
+export function esHoraPasada(fechaISO: string, hour: number): boolean {
+  return fechaISO === hoyMadrid() && hour <= horaActualMadrid();
+}
+
 const FORMATO_ETIQUETA = new Intl.DateTimeFormat("es-ES", {
   timeZone: TIME_ZONE,
   weekday: "long",

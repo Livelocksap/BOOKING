@@ -50,9 +50,9 @@ export function horaActualMadrid(): number {
   return Number(horaTexto);
 }
 
-/** Una franja ya ha pasado si es hoy y su hora de inicio ya se alcanzo. */
+/** Una franja ya ha pasado si es hoy y su hora ya termino (la hora en curso se puede reservar). */
 export function esHoraPasada(fechaISO: string, hour: number): boolean {
-  return fechaISO === hoyMadrid() && hour <= horaActualMadrid();
+  return fechaISO === hoyMadrid() && hour < horaActualMadrid();
 }
 
 const FORMATO_ETIQUETA = new Intl.DateTimeFormat("es-ES", {

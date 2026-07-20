@@ -1,0 +1,5 @@
+.env
+.env.local
+.env.*.local
+prisma/*.db
+prisma/*.db-journal

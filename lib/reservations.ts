@@ -14,7 +14,7 @@ export async function crearReserva(opts: {
 
   if (!esFechaReservable(date)) {
     throw new ReservaError(
-      "Esa fecha esta fuera de la ventana de reserva (hoy hasta dentro de 3 dias)."
+      "Esa fecha esta fuera de la ventana de reserva (hoy hasta dentro de 2 dias)."
     );
   }
   if (hour < HORA_INICIO || hour >= HORA_FIN) {

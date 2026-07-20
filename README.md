@@ -6,7 +6,7 @@ de padel (Pista 1 y Pista 2).
 ## Reglas de negocio
 
 - Alta de socio con nombre, portal, planta, puerta, usuario y contrasena.
-- Ventana de reserva movil: se puede reservar desde hoy hasta dentro de 3
+- Ventana de reserva movil: se puede reservar desde hoy hasta dentro de 2
   dias (la ventana avanza sola cada medianoche, hora de Madrid).
 - Horario reservable: de 11:00 a 21:00 en franjas de 1 hora.
 - Un socio solo puede tener una reserva activa por dia (en cualquiera de las

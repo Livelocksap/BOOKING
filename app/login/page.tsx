@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { login } from "./actions";
 
@@ -9,6 +10,14 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto max-w-sm">
+      <Image
+        src="/natura1.jpg"
+        alt="Fachada de la comunidad"
+        width={1600}
+        height={931}
+        priority
+        className="mb-6 w-full rounded-lg object-cover"
+      />
       <h1 className="mb-6 text-2xl font-semibold">Iniciar sesion</h1>
       <form action={formAction} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">

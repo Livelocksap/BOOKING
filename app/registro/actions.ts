@@ -33,6 +33,16 @@ export async function registrar(
     return { error: "Ese usuario ya existe, elige otro." };
   }
 
+  const viviendaOcupada = await prisma.member.findUnique({
+    where: { portal_planta_puerta: { portal, planta, puerta } },
+  });
+  if (viviendaOcupada) {
+    return {
+      error:
+        "Ya existe una cuenta registrada con ese portal, planta y puerta. Si es tu vivienda, usa esa cuenta o contacta con el administrador.",
+    };
+  }
+
   const passwordHash = await hashPassword(password);
   const member = await prisma.member.create({
     data: { nombre, portal, planta, puerta, username, passwordHash },

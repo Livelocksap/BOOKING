@@ -32,6 +32,8 @@ model Member {
   createdAt    DateTime @default(now())
 
   reservations Reservation[]
+
+  @@unique([portal, planta, puerta])
 }
 
 model Court {

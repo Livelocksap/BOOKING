@@ -55,6 +55,18 @@ export function esHoraPasada(fechaISO: string, hour: number): boolean {
   return fechaISO === hoyMadrid() && hour < horaActualMadrid();
 }
 
+/**
+ * Una reserva solo se puede cancelar antes de que empiece su franja.
+ * Si la fecha es anterior a hoy, o es hoy y la hora ya ha llegado o pasado,
+ * la reserva ya no es cancelable.
+ */
+export function esReservaCancelable(fechaISO: string, hour: number): boolean {
+  const hoy = hoyMadrid();
+  if (fechaISO < hoy) return false;
+  if (fechaISO > hoy) return true;
+  return horaActualMadrid() < hour;
+}
+
 const FORMATO_ETIQUETA = new Intl.DateTimeFormat("es-ES", {
   timeZone: TIME_ZONE,
   weekday: "long",

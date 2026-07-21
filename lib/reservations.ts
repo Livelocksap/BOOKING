@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db";
 import {
   esFechaReservable,
   esHoraPasada,
+  esReservaCancelable,
   HORA_INICIO,
   HORA_FIN,
 } from "@/lib/dates";
@@ -66,9 +67,46 @@ export async function cancelarReserva(opts: {
   if (!isAdmin && reserva.memberId !== memberId) {
     throw new ReservaError("No puedes cancelar la reserva de otro socio.");
   }
+  if (!esReservaCancelable(reserva.date, reserva.hour)) {
+    throw new ReservaError("No se pueden cancelar reservas en el pasado.");
+  }
 
   return prisma.reservation.update({
     where: { id: reservationId },
     data: { status: "CANCELADA", cancelledAt: new Date() },
+  });
+}
+
+export async function informarResultado(opts: {
+  reservationId: string;
+  memberId: string;
+  jugador1: string;
+  jugador2: string;
+  resultado: string;
+}) {
+  const { reservationId, memberId, jugador1, jugador2, resultado } = opts;
+
+  const reserva = await prisma.reservation.findUnique({
+    where: { id: reservationId },
+  });
+  if (!reserva || reserva.status !== "ACTIVA") {
+    throw new ReservaError("La reserva no existe o esta cancelada.");
+  }
+  if (reserva.memberId !== memberId) {
+    throw new ReservaError("No puedes editar el resultado de otro socio.");
+  }
+  if (esReservaCancelable(reserva.date, reserva.hour)) {
+    throw new ReservaError(
+      "Solo se puede informar el resultado de una reserva ya jugada."
+    );
+  }
+
+  return prisma.reservation.update({
+    where: { id: reservationId },
+    data: {
+      jugador1: jugador1.trim() || null,
+      jugador2: jugador2.trim() || null,
+      resultado: resultado.trim() || null,
+    },
   });
 }

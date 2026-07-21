@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db";
 import {
   esFechaReservable,
   esHoraPasada,
+  esReservaCancelable,
   HORA_INICIO,
   HORA_FIN,
 } from "@/lib/dates";
@@ -65,6 +66,9 @@ export async function cancelarReserva(opts: {
   }
   if (!isAdmin && reserva.memberId !== memberId) {
     throw new ReservaError("No puedes cancelar la reserva de otro socio.");
+  }
+  if (!esReservaCancelable(reserva.date, reserva.hour)) {
+    throw new ReservaError("No se pueden cancelar reservas en el pasado.");
   }
 
   return prisma.reservation.update({

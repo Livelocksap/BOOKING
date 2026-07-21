@@ -1,6 +1,6 @@
 import { requireSocio } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { etiquetaFecha } from "@/lib/dates";
+import { etiquetaFecha, esReservaCancelable } from "@/lib/dates";
 import { cancelar } from "@/app/reservas/actions";
 
 export default async function MisReservasPage({
@@ -33,31 +33,40 @@ export default async function MisReservasPage({
         </p>
       ) : (
         <ul className="flex flex-col gap-3">
-          {reservas.map((reserva) => (
-            <li
-              key={reserva.id}
-              className="flex items-center justify-between rounded border border-black/10 px-4 py-3 dark:border-white/10"
-            >
-              <div>
-                <p className="font-medium">
-                  {etiquetaFecha(reserva.date)}
-                </p>
-                <p className="text-sm text-black/60 dark:text-white/60">
-                  {reserva.court.name} · {reserva.hour}:00 - {reserva.hour + 1}:00
-                </p>
-              </div>
-              <form action={cancelar}>
-                <input type="hidden" name="reservationId" value={reserva.id} />
-                <input type="hidden" name="volverA" value="/mis-reservas" />
-                <button
-                  type="submit"
-                  className="rounded border border-red-600/40 px-3 py-1.5 text-sm text-red-700 hover:bg-red-50 dark:border-red-400/30 dark:text-red-300 dark:hover:bg-red-950"
-                >
-                  Cancelar
-                </button>
-              </form>
-            </li>
-          ))}
+          {reservas.map((reserva) => {
+            const cancelable = esReservaCancelable(reserva.date, reserva.hour);
+            return (
+              <li
+                key={reserva.id}
+                className="flex items-center justify-between rounded border border-black/10 px-4 py-3 dark:border-white/10"
+              >
+                <div>
+                  <p className="font-medium">
+                    {etiquetaFecha(reserva.date)}
+                  </p>
+                  <p className="text-sm text-black/60 dark:text-white/60">
+                    {reserva.court.name} · {reserva.hour}:00 - {reserva.hour + 1}:00
+                  </p>
+                </div>
+                {cancelable ? (
+                  <form action={cancelar}>
+                    <input type="hidden" name="reservationId" value={reserva.id} />
+                    <input type="hidden" name="volverA" value="/mis-reservas" />
+                    <button
+                      type="submit"
+                      className="rounded border border-red-600/40 px-3 py-1.5 text-sm text-red-700 hover:bg-red-50 dark:border-red-400/30 dark:text-red-300 dark:hover:bg-red-950"
+                    >
+                      Cancelar
+                    </button>
+                  </form>
+                ) : (
+                  <span className="text-sm text-black/40 dark:text-white/40">
+                    Pasada
+                  </span>
+                )}
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>

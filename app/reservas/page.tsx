@@ -5,6 +5,7 @@ import {
   horasDisponibles,
   etiquetaFecha,
   esHoraPasada,
+  esReservaCancelable,
 } from "@/lib/dates";
 import { reservar, cancelar } from "./actions";
 
@@ -94,6 +95,17 @@ export default async function ReservasPage({
                       }
 
                       if (esMia) {
+                        if (!esReservaCancelable(fecha, hora)) {
+                          return (
+                            <div
+                              key={hora}
+                              title="Ya no se puede cancelar"
+                              className="w-full rounded border border-blue-600/40 bg-blue-50 px-2 py-1.5 text-center text-sm text-blue-800 dark:border-blue-400/30 dark:bg-blue-950 dark:text-blue-300"
+                            >
+                              {etiquetaHora} (tuya)
+                            </div>
+                          );
+                        }
                         return (
                           <form key={hora} action={cancelar}>
                             <input

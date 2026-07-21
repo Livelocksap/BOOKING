@@ -50,6 +50,9 @@ model Reservation {
   status      ReservationStatus @default(ACTIVA)
   createdAt   DateTime          @default(now())
   cancelledAt DateTime?
+  jugador1    String?
+  jugador2    String?
+  resultado   String?
 
   courtId  String
   court    Court  @relation(fields: [courtId], references: [id])

@@ -76,8 +76,7 @@ export default function AyudaPage() {
       <section className="mb-8">
         <h2 className="mb-2 text-lg font-medium">Cómo cancelar una reserva</h2>
         <p className="text-sm text-black/70 dark:text-white/70">
-          Puedes cancelar tu reserva en cualquier momento, sin límite de
-          antelación, desde{" "}
+          Puedes cancelar tu reserva desde{" "}
           <Link href="/mis-reservas" className="underline">
             Mis reservas
           </Link>{" "}
@@ -85,7 +84,9 @@ export default function AyudaPage() {
           <Link href="/reservas" className="underline">
             Reservas
           </Link>
-          . En cuanto la canceles, la franja queda libre para otro socio.
+          , siempre que la franja todavía no haya comenzado. Una vez
+          empieza la hora reservada, la reserva ya no se puede cancelar. En
+          cuanto la canceles, la franja queda libre para otro socio.
         </p>
       </section>
 

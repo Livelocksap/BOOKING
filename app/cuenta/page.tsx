@@ -6,7 +6,7 @@ export default async function CuentaPage() {
 
   return (
     <div className="mx-auto max-w-sm">
-      <h1 className="mb-6 text-2xl font-semibold">Cambiar contrasena</h1>
+      <h1 className="mb-6 text-2xl font-semibold">Cambiar contraseña</h1>
       <CambiarPasswordForm />
     </div>
   );

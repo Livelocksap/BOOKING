@@ -3,7 +3,7 @@ import "server-only";
 const TIME_ZONE = "Europe/Madrid";
 
 export const HORA_INICIO = 11;
-export const HORA_FIN = 21; // exclusiva: la ultima franja empieza a las 20
+export const HORA_FIN = 21; // exclusiva: la última franja empieza a las 20
 export const DIAS_VENTANA = 3; // hoy, +1, +2
 
 export function horasDisponibles(): number[] {
@@ -24,7 +24,7 @@ export function hoyMadrid(): string {
 
 function sumarDias(fechaISO: string, dias: number): string {
   const [y, m, d] = fechaISO.split("-").map(Number);
-  // Mediodia UTC evita saltos de dia por horario de verano al sumar dias.
+  // Mediodía UTC evita saltos de día por horario de verano al sumar días.
   const base = new Date(Date.UTC(y, m - 1, d, 12));
   base.setUTCDate(base.getUTCDate() + dias);
   return base.toISOString().slice(0, 10);
@@ -50,7 +50,7 @@ export function horaActualMadrid(): number {
   return Number(horaTexto);
 }
 
-/** Una franja ya ha pasado si es hoy y su hora ya termino (la hora en curso se puede reservar). */
+/** Una franja ya ha pasado si es hoy y su hora ya terminó (la hora en curso se puede reservar). */
 export function esHoraPasada(fechaISO: string, hour: number): boolean {
   return fechaISO === hoyMadrid() && hour < horaActualMadrid();
 }

@@ -36,7 +36,7 @@ export default async function ReservasPage({
     <div>
       <h1 className="mb-1 text-2xl font-semibold">Reservas</h1>
       <p className="mb-6 text-sm text-black/60 dark:text-white/60">
-        Puedes reservar desde hoy hasta dentro de 2 dias. Una pista por dia.
+        Puedes reservar desde hoy hasta dentro de 2 días. Una pista por día.
       </p>
 
       {error && (

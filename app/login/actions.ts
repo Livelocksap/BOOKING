@@ -14,12 +14,12 @@ export async function login(
   const password = String(formData.get("password") ?? "");
 
   if (!username || !password) {
-    return { error: "Introduce usuario y contrasena." };
+    return { error: "Introduce usuario y contraseña." };
   }
 
   const member = await prisma.member.findUnique({ where: { username } });
   if (!member || !(await verifyPassword(password, member.passwordHash))) {
-    return { error: "Usuario o contrasena incorrectos." };
+    return { error: "Usuario o contraseña incorrectos." };
   }
 
   const session = await getSession();

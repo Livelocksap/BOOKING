@@ -18,17 +18,17 @@ export async function cambiarPassword(
     return { error: "Rellena todos los campos." };
   }
   if (nueva.length < 6) {
-    return { error: "La contrasena nueva debe tener al menos 6 caracteres." };
+    return { error: "La contraseña nueva debe tener al menos 6 caracteres." };
   }
   if (nueva !== nueva2) {
-    return { error: "Las contrasenas nuevas no coinciden." };
+    return { error: "Las contraseñas nuevas no coinciden." };
   }
 
   const member = await prisma.member.findUnique({
     where: { id: session.memberId! },
   });
   if (!member || !(await verifyPassword(actual, member.passwordHash))) {
-    return { error: "La contrasena actual no es correcta." };
+    return { error: "La contraseña actual no es correcta." };
   }
 
   const passwordHash = await hashPassword(nueva);

@@ -75,13 +75,13 @@ export default function RegistroPage() {
         <Campo id="username" label="Usuario" autoComplete="username" />
         <Campo
           id="password"
-          label="Contrasena"
+          label="Contraseña"
           type="password"
           autoComplete="new-password"
         />
         <Campo
           id="password2"
-          label="Repite la contrasena"
+          label="Repite la contraseña"
           type="password"
           autoComplete="new-password"
         />
@@ -99,7 +99,7 @@ export default function RegistroPage() {
       <p className="mt-4 text-sm text-black/60 dark:text-white/60">
         ¿Ya tienes cuenta?{" "}
         <Link href="/login" className="underline">
-          Inicia sesion
+          Inicia sesión
         </Link>
       </p>
     </div>

@@ -19,7 +19,7 @@ export default async function NavBar() {
               Mis reservas
             </Link>
             <Link href="/cuenta" className="hover:underline">
-              Cambiar contrasena
+              Cambiar contraseña
             </Link>
             {session.role === "ADMIN" && (
               <Link href="/admin" className="hover:underline">
@@ -36,14 +36,14 @@ export default async function NavBar() {
             {session.nombre}
             <form action={cerrarSesion}>
               <button type="submit" className="hover:underline">
-                Cerrar sesion
+                Cerrar sesión
               </button>
             </form>
           </span>
         ) : (
           <span className="ml-auto flex items-center gap-3">
             <Link href="/login" className="hover:underline">
-              Iniciar sesion
+              Iniciar sesión
             </Link>
             <Link href="/registro" className="hover:underline">
               Registrarse

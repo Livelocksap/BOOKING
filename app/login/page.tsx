@@ -18,7 +18,7 @@ export default function LoginPage() {
         priority
         className="mb-6 w-full rounded-lg object-cover"
       />
-      <h1 className="mb-6 text-2xl font-semibold">Iniciar sesion</h1>
+      <h1 className="mb-6 text-2xl font-semibold">Iniciar sesión</h1>
       <form action={formAction} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <label htmlFor="username" className="text-sm font-medium">
@@ -34,7 +34,7 @@ export default function LoginPage() {
         </div>
         <div className="flex flex-col gap-1">
           <label htmlFor="password" className="text-sm font-medium">
-            Contrasena
+            Contraseña
           </label>
           <input
             id="password"
@@ -57,9 +57,9 @@ export default function LoginPage() {
         </button>
       </form>
       <p className="mt-4 text-sm text-black/60 dark:text-white/60">
-        ¿Aun no tienes cuenta?{" "}
+        ¿Aún no tienes cuenta?{" "}
         <Link href="/registro" className="underline">
-          Registrate
+          Regístrate
         </Link>
       </p>
     </div>

@@ -27,13 +27,13 @@ export async function registrar(
     !PLANTAS.includes(planta) ||
     !PUERTAS.includes(puerta)
   ) {
-    return { error: "Portal, planta o puerta no son validos." };
+    return { error: "Portal, planta o puerta no son válidos." };
   }
   if (password.length < 6) {
-    return { error: "La contrasena debe tener al menos 6 caracteres." };
+    return { error: "La contraseña debe tener al menos 6 caracteres." };
   }
   if (password !== password2) {
-    return { error: "Las contrasenas no coinciden." };
+    return { error: "Las contraseñas no coinciden." };
   }
 
   const existente = await prisma.member.findUnique({ where: { username } });

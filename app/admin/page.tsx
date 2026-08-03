@@ -28,7 +28,7 @@ export default async function AdminPage({
   return (
     <div className="flex flex-col gap-10">
       <div>
-        <h1 className="mb-6 text-2xl font-semibold">Administracion</h1>
+        <h1 className="mb-6 text-2xl font-semibold">Administración</h1>
         {error && (
           <p className="mb-4 rounded bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950 dark:text-red-300">
             {error}
@@ -36,8 +36,8 @@ export default async function AdminPage({
         )}
         {nuevaPassword && nuevaPasswordPara && (
           <p className="mb-4 rounded bg-green-50 px-3 py-2 text-sm text-green-800 dark:bg-green-950 dark:text-green-300">
-            Nueva contrasena para {nuevaPasswordPara}:{" "}
-            <strong className="font-mono">{nuevaPassword}</strong>. Comunicasela
+            Nueva contraseña para {nuevaPasswordPara}:{" "}
+            <strong className="font-mono">{nuevaPassword}</strong>. Comunícasela
             ahora.
           </p>
         )}
@@ -120,7 +120,7 @@ export default async function AdminPage({
                     type="submit"
                     className="rounded border border-blue-600/40 px-3 py-1.5 text-sm text-blue-700 hover:bg-blue-50 dark:border-blue-400/30 dark:text-blue-300 dark:hover:bg-blue-950"
                   >
-                    Restablecer contrasena
+                    Restablecer contraseña
                   </button>
                 </form>
                 <form action={eliminarSocio}>

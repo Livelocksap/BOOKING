@@ -20,7 +20,7 @@ export async function crearReserva(opts: {
 
   if (!esFechaReservable(date)) {
     throw new ReservaError(
-      "Esa fecha esta fuera de la ventana de reserva (hoy hasta dentro de 2 dias)."
+      "Esa fecha está fuera de la ventana de reserva (hoy hasta dentro de 2 días)."
     );
   }
   if (hour < HORA_INICIO || hour >= HORA_FIN) {
@@ -35,14 +35,14 @@ export async function crearReserva(opts: {
       where: { courtId, date, hour, status: "ACTIVA" },
     });
     if (pistaOcupada) {
-      throw new ReservaError("Esa pista ya esta reservada en esa franja.");
+      throw new ReservaError("Esa pista ya está reservada en esa franja.");
     }
 
     const socioYaReservo = await tx.reservation.findFirst({
       where: { memberId, date, status: "ACTIVA" },
     });
     if (socioYaReservo) {
-      throw new ReservaError("Ya tienes una reserva ese dia.");
+      throw new ReservaError("Ya tienes una reserva ese día.");
     }
 
     return tx.reservation.create({
@@ -62,7 +62,7 @@ export async function cancelarReserva(opts: {
     where: { id: reservationId },
   });
   if (!reserva || reserva.status !== "ACTIVA") {
-    throw new ReservaError("La reserva no existe o ya esta cancelada.");
+    throw new ReservaError("La reserva no existe o ya está cancelada.");
   }
   if (!isAdmin && reserva.memberId !== memberId) {
     throw new ReservaError("No puedes cancelar la reserva de otro socio.");
@@ -90,7 +90,7 @@ export async function informarResultado(opts: {
     where: { id: reservationId },
   });
   if (!reserva || reserva.status !== "ACTIVA") {
-    throw new ReservaError("La reserva no existe o esta cancelada.");
+    throw new ReservaError("La reserva no existe o está cancelada.");
   }
   if (reserva.memberId !== memberId) {
     throw new ReservaError("No puedes editar el resultado de otro socio.");

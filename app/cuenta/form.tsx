@@ -17,7 +17,7 @@ export function CambiarPasswordForm() {
     <form ref={formRef} action={formAction} className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <label htmlFor="actual" className="text-sm font-medium">
-          Contrasena actual
+          Contraseña actual
         </label>
         <input
           id="actual"
@@ -30,7 +30,7 @@ export function CambiarPasswordForm() {
       </div>
       <div className="flex flex-col gap-1">
         <label htmlFor="nueva" className="text-sm font-medium">
-          Nueva contrasena
+          Nueva contraseña
         </label>
         <input
           id="nueva"
@@ -43,7 +43,7 @@ export function CambiarPasswordForm() {
       </div>
       <div className="flex flex-col gap-1">
         <label htmlFor="nueva2" className="text-sm font-medium">
-          Repite la nueva contrasena
+          Repite la nueva contraseña
         </label>
         <input
           id="nueva2"
@@ -57,7 +57,7 @@ export function CambiarPasswordForm() {
       {state?.error && <p className="text-sm text-red-600">{state.error}</p>}
       {state?.ok && (
         <p className="text-sm text-green-700 dark:text-green-400">
-          Contrasena actualizada.
+          Contraseña actualizada.
         </p>
       )}
       <button

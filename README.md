@@ -12,8 +12,9 @@ de padel (Pista 1 y Pista 2).
 - Un socio solo puede tener una reserva activa por dia (en cualquiera de las
   2 pistas).
 - Las reservas se pueden cancelar en cualquier momento.
-- Rol de administrador: ve y cancela cualquier reserva, y gestiona la lista
-  de socios.
+- Rol de administrador: ve y cancela cualquier reserva, gestiona la lista
+  de socios y puede restablecerles la contrasena (no hay recuperacion por
+  email; el admin genera una contrasena temporal desde `/admin`).
 
 ## Stack
 

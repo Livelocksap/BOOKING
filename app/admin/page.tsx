@@ -2,15 +2,19 @@ import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { etiquetaFecha, esReservaCancelable } from "@/lib/dates";
 import { cancelar } from "@/app/reservas/actions";
-import { eliminarSocio } from "./actions";
+import { eliminarSocio, resetearPassword } from "./actions";
 
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{
+    error?: string;
+    nuevaPassword?: string;
+    nuevaPasswordPara?: string;
+  }>;
 }) {
   await requireAdmin();
-  const { error } = await searchParams;
+  const { error, nuevaPassword, nuevaPasswordPara } = await searchParams;
 
   const [reservas, socios] = await Promise.all([
     prisma.reservation.findMany({
@@ -28,6 +32,13 @@ export default async function AdminPage({
         {error && (
           <p className="mb-4 rounded bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950 dark:text-red-300">
             {error}
+          </p>
+        )}
+        {nuevaPassword && nuevaPasswordPara && (
+          <p className="mb-4 rounded bg-green-50 px-3 py-2 text-sm text-green-800 dark:bg-green-950 dark:text-green-300">
+            Nueva contrasena para {nuevaPasswordPara}:{" "}
+            <strong className="font-mono">{nuevaPassword}</strong>. Comunicasela
+            ahora.
           </p>
         )}
       </div>
@@ -86,7 +97,7 @@ export default async function AdminPage({
           {socios.map((socio) => (
             <li
               key={socio.id}
-              className="flex items-center justify-between rounded border border-black/10 px-4 py-3 dark:border-white/10"
+              className="flex flex-wrap items-center justify-between gap-3 rounded border border-black/10 px-4 py-3 dark:border-white/10"
             >
               <div>
                 <p className="font-medium">
@@ -102,15 +113,26 @@ export default async function AdminPage({
                   {socio.planta}, puerta {socio.puerta}
                 </p>
               </div>
-              <form action={eliminarSocio}>
-                <input type="hidden" name="memberId" value={socio.id} />
-                <button
-                  type="submit"
-                  className="rounded border border-red-600/40 px-3 py-1.5 text-sm text-red-700 hover:bg-red-50 dark:border-red-400/30 dark:text-red-300 dark:hover:bg-red-950"
-                >
-                  Eliminar
-                </button>
-              </form>
+              <div className="flex items-center gap-2">
+                <form action={resetearPassword}>
+                  <input type="hidden" name="memberId" value={socio.id} />
+                  <button
+                    type="submit"
+                    className="rounded border border-blue-600/40 px-3 py-1.5 text-sm text-blue-700 hover:bg-blue-50 dark:border-blue-400/30 dark:text-blue-300 dark:hover:bg-blue-950"
+                  >
+                    Restablecer contrasena
+                  </button>
+                </form>
+                <form action={eliminarSocio}>
+                  <input type="hidden" name="memberId" value={socio.id} />
+                  <button
+                    type="submit"
+                    className="rounded border border-red-600/40 px-3 py-1.5 text-sm text-red-700 hover:bg-red-50 dark:border-red-400/30 dark:text-red-300 dark:hover:bg-red-950"
+                  >
+                    Eliminar
+                  </button>
+                </form>
+              </div>
             </li>
           ))}
         </ul>

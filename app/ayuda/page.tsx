@@ -90,6 +90,17 @@ export default function AyudaPage() {
         </p>
       </section>
 
+      <section className="mb-8">
+        <h2 className="mb-2 text-lg font-medium">
+          ¿Olvidaste tu contraseña?
+        </h2>
+        <p className="text-sm text-black/70 dark:text-white/70">
+          No hay recuperación automática: contacta con la administración de
+          la comunidad y te generarán una contraseña nueva desde el panel
+          de administración.
+        </p>
+      </section>
+
       <section>
         <h2 className="mb-2 text-lg font-medium">¿Algún problema?</h2>
         <p className="text-sm text-black/70 dark:text-white/70">

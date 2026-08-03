@@ -91,13 +91,30 @@ export default function AyudaPage() {
       </section>
 
       <section className="mb-8">
+        <h2 className="mb-2 text-lg font-medium">Cambiar tu contraseña</h2>
+        <p className="text-sm text-black/70 dark:text-white/70">
+          Con la sesión iniciada, pulsa tu nombre en la barra superior para
+          ir a{" "}
+          <Link href="/cuenta" className="underline">
+            Cambiar contraseña
+          </Link>
+          . Necesitas tu contraseña actual para poner una nueva.
+        </p>
+      </section>
+
+      <section className="mb-8">
         <h2 className="mb-2 text-lg font-medium">
           ¿Olvidaste tu contraseña?
         </h2>
         <p className="text-sm text-black/70 dark:text-white/70">
           No hay recuperación automática: contacta con la administración de
           la comunidad y te generarán una contraseña nueva desde el panel
-          de administración.
+          de administración. Una vez que inicies sesión con ella, puedes
+          cambiarla por una tuya desde{" "}
+          <Link href="/cuenta" className="underline">
+            Cambiar contraseña
+          </Link>
+          .
         </p>
       </section>
 

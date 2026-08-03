@@ -30,7 +30,9 @@ export default async function NavBar() {
         </Link>
         {autenticado ? (
           <span className="ml-auto flex items-center gap-3 text-black/60 dark:text-white/60">
-            {session.nombre}
+            <Link href="/cuenta" className="hover:underline">
+              {session.nombre}
+            </Link>
             <form action={cerrarSesion}>
               <button type="submit" className="hover:underline">
                 Cerrar sesion

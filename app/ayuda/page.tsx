@@ -93,12 +93,12 @@ export default function AyudaPage() {
       <section className="mb-8">
         <h2 className="mb-2 text-lg font-medium">Cambiar tu contraseña</h2>
         <p className="text-sm text-black/70 dark:text-white/70">
-          Con la sesión iniciada, pulsa tu nombre en la barra superior para
-          ir a{" "}
+          Con la sesión iniciada, pulsa{" "}
           <Link href="/cuenta" className="underline">
             Cambiar contraseña
-          </Link>
-          . Necesitas tu contraseña actual para poner una nueva.
+          </Link>{" "}
+          en la barra superior. Necesitas tu contraseña actual para poner
+          una nueva.
         </p>
       </section>
 

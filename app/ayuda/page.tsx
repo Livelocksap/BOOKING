@@ -107,10 +107,12 @@ export default function AyudaPage() {
           ¿Olvidaste tu contraseña?
         </h2>
         <p className="text-sm text-black/70 dark:text-white/70">
-          No hay recuperación automática: contacta con la administración de
-          la comunidad y te generarán una contraseña nueva desde el panel
-          de administración. Una vez que inicies sesión con ella, puedes
-          cambiarla por una tuya desde{" "}
+          No hay recuperación automática: contacta con{" "}
+          <a href="mailto:alberto.sabate@gmail.com" className="underline">
+            alberto.sabate@gmail.com
+          </a>{" "}
+          y te generará una contraseña nueva en breve. Una vez que inicies
+          sesión con ella, puedes cambiarla por una tuya desde{" "}
           <Link href="/cuenta" className="underline">
             Cambiar contraseña
           </Link>

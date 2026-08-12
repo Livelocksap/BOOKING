@@ -8,7 +8,7 @@ de padel (Pista 1 y Pista 2).
 - Alta de socio con nombre, portal, planta, puerta, usuario y contraseña.
 - Ventana de reserva móvil: se puede reservar desde hoy hasta dentro de 2
   días (la ventana avanza sola cada medianoche, hora de Madrid).
-- Horario reservable: de 11:00 a 21:00 en franjas de 1 hora.
+- Horario reservable: de 9:00 a 22:00 en franjas de 1 hora.
 - Un socio solo puede tener una reserva activa por día (en cualquiera de las
   2 pistas).
 - Las reservas se pueden cancelar en cualquier momento.

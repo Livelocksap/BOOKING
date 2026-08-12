@@ -2,8 +2,8 @@ import "server-only";
 
 const TIME_ZONE = "Europe/Madrid";
 
-export const HORA_INICIO = 11;
-export const HORA_FIN = 21; // exclusiva: la última franja empieza a las 20
+export const HORA_INICIO = 9;
+export const HORA_FIN = 22; // exclusiva: la última franja empieza a las 21
 export const DIAS_VENTANA = 3; // hoy, +1, +2
 
 export function horasDisponibles(): number[] {

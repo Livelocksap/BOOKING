@@ -1,6 +1,6 @@
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { etiquetaFecha, esReservaCancelable } from "@/lib/dates";
+import { etiquetaFecha, etiquetaHora, esReservaCancelable } from "@/lib/dates";
 import { cancelar } from "@/app/reservas/actions";
 import { eliminarSocio, resetearPassword } from "./actions";
 
@@ -20,7 +20,7 @@ export default async function AdminPage({
     prisma.reservation.findMany({
       where: { status: "ACTIVA" },
       include: { court: true, member: { select: { nombre: true, portal: true, planta: true, puerta: true } } },
-      orderBy: [{ date: "asc" }, { hour: "asc" }],
+      orderBy: [{ date: "asc" }, { startMinute: "asc" }],
     }),
     prisma.member.findMany({ orderBy: { nombre: "asc" } }),
   ]);
@@ -52,7 +52,7 @@ export default async function AdminPage({
         ) : (
           <ul className="flex flex-col gap-3">
             {reservas.map((reserva) => {
-              const cancelable = esReservaCancelable(reserva.date, reserva.hour);
+              const cancelable = esReservaCancelable(reserva.date, reserva.startMinute);
               return (
                 <li
                   key={reserva.id}
@@ -61,7 +61,8 @@ export default async function AdminPage({
                   <div>
                     <p className="font-medium">
                       {etiquetaFecha(reserva.date)} · {reserva.court.name} ·{" "}
-                      {reserva.hour}:00
+                      {etiquetaHora(reserva.startMinute)}-
+                      {etiquetaHora(reserva.startMinute + reserva.durationMinutes)}
                     </p>
                     <p className="text-sm text-black/60 dark:text-white/60">
                       {reserva.member.nombre} (portal {reserva.member.portal}, planta{" "}

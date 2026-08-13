@@ -15,11 +15,18 @@ export async function reservar(formData: FormData) {
 
   const courtId = String(formData.get("courtId") ?? "");
   const date = String(formData.get("date") ?? "");
-  const hour = Number(formData.get("hour"));
+  const startMinute = Number(formData.get("startMinute"));
+  const durationMinutes = Number(formData.get("durationMinutes"));
   const volverA = String(formData.get("volverA") ?? "/reservas");
 
   try {
-    await crearReserva({ memberId: session.memberId!, courtId, date, hour });
+    await crearReserva({
+      memberId: session.memberId!,
+      courtId,
+      date,
+      startMinute,
+      durationMinutes,
+    });
   } catch (err) {
     const mensaje =
       err instanceof ReservaError ? err.message : "No se pudo crear la reserva.";

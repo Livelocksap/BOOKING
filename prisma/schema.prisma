@@ -44,15 +44,16 @@ model Court {
 }
 
 model Reservation {
-  id          String            @id @default(cuid())
-  date        String // "YYYY-MM-DD" en huso horario Europe/Madrid
-  hour        Int // hora de inicio, 11..20
-  status      ReservationStatus @default(ACTIVA)
-  createdAt   DateTime          @default(now())
-  cancelledAt DateTime?
-  jugador1    String?
-  jugador2    String?
-  resultado   String?
+  id              String            @id @default(cuid())
+  date            String // "YYYY-MM-DD" en huso horario Europe/Madrid
+  startMinute     Int // minutos desde medianoche, ej. 540 = 9:00
+  durationMinutes Int // 60 o 90
+  status          ReservationStatus @default(ACTIVA)
+  createdAt       DateTime          @default(now())
+  cancelledAt     DateTime?
+  jugador1        String?
+  jugador2        String?
+  resultado       String?
 
   courtId  String
   court    Court  @relation(fields: [courtId], references: [id])

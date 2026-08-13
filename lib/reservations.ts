@@ -2,10 +2,13 @@ import "server-only";
 import { prisma } from "@/lib/db";
 import {
   esFechaReservable,
-  esHoraPasada,
+  esInicioPasado,
   esReservaCancelable,
+  esDuracionValida,
   HORA_INICIO,
   HORA_FIN,
+  PASO_MINUTOS,
+  type DuracionMinutos,
 } from "@/lib/dates";
 
 export class ReservaError extends Error {}
@@ -14,27 +17,40 @@ export async function crearReserva(opts: {
   memberId: string;
   courtId: string;
   date: string;
-  hour: number;
+  startMinute: number;
+  durationMinutes: number;
 }) {
-  const { memberId, courtId, date, hour } = opts;
+  const { memberId, courtId, date, startMinute, durationMinutes } = opts;
 
   if (!esFechaReservable(date)) {
     throw new ReservaError(
       "Esa fecha está fuera de la ventana de reserva (hoy hasta dentro de 2 días)."
     );
   }
-  if (hour < HORA_INICIO || hour >= HORA_FIN) {
+  if (!esDuracionValida(durationMinutes)) {
+    throw new ReservaError("Esa duración no es válida.");
+  }
+  const duracion: DuracionMinutos = durationMinutes;
+  if (
+    startMinute % PASO_MINUTOS !== 0 ||
+    startMinute < HORA_INICIO * 60 ||
+    startMinute + duracion > HORA_FIN * 60
+  ) {
     throw new ReservaError("Esa franja horaria no existe.");
   }
-  if (esHoraPasada(date, hour)) {
+  if (esInicioPasado(date, startMinute)) {
     throw new ReservaError("Esa franja ya ha pasado.");
   }
 
   return prisma.$transaction(async (tx) => {
-    const pistaOcupada = await tx.reservation.findFirst({
-      where: { courtId, date, hour, status: "ACTIVA" },
+    const reservasPista = await tx.reservation.findMany({
+      where: { courtId, date, status: "ACTIVA" },
     });
-    if (pistaOcupada) {
+    const finMinuto = startMinute + duracion;
+    const solapa = reservasPista.some(
+      (r) => startMinute < r.startMinute + r.durationMinutes && finMinuto > r.startMinute
+    );
+    if (solapa) {
       throw new ReservaError("Esa pista ya está reservada en esa franja.");
     }
 
@@ -46,7 +62,14 @@ export async function crearReserva(opts: {
     }
 
     return tx.reservation.create({
-      data: { memberId, courtId, date, hour, status: "ACTIVA" },
+      data: {
+        memberId,
+        courtId,
+        date,
+        startMinute,
+        durationMinutes: duracion,
+        status: "ACTIVA",
+      },
     });
   });
 }
@@ -67,7 +90,7 @@ export async function cancelarReserva(opts: {
   if (!isAdmin && reserva.memberId !== memberId) {
     throw new ReservaError("No puedes cancelar la reserva de otro socio.");
   }
-  if (!esReservaCancelable(reserva.date, reserva.hour)) {
+  if (!esReservaCancelable(reserva.date, reserva.startMinute)) {
     throw new ReservaError("No se pueden cancelar reservas en el pasado.");
   }
 
@@ -95,7 +118,7 @@ export async function informarResultado(opts: {
   if (reserva.memberId !== memberId) {
     throw new ReservaError("No puedes editar el resultado de otro socio.");
   }
-  if (esReservaCancelable(reserva.date, reserva.hour)) {
+  if (esReservaCancelable(reserva.date, reserva.startMinute)) {
     throw new ReservaError(
       "Solo se puede informar el resultado de una reserva ya jugada."
     );

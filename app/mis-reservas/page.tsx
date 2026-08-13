@@ -1,6 +1,6 @@
 import { requireSocio } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { etiquetaFecha, esReservaCancelable, hoyMadrid } from "@/lib/dates";
+import { etiquetaFecha, etiquetaHora, esReservaCancelable, hoyMadrid } from "@/lib/dates";
 import { cancelar, guardarResultado } from "@/app/reservas/actions";
 import { YearFilter } from "./year-filter";
 
@@ -30,7 +30,7 @@ export default async function MisReservasPage({
       date: { startsWith: `${añoSeleccionado}-` },
     },
     include: { court: true },
-    orderBy: [{ date: "asc" }, { hour: "asc" }],
+    orderBy: [{ date: "asc" }, { startMinute: "asc" }],
   });
 
   return (
@@ -66,7 +66,7 @@ export default async function MisReservasPage({
             </thead>
             <tbody>
               {reservas.map((reserva) => {
-                const cancelable = esReservaCancelable(reserva.date, reserva.hour);
+                const cancelable = esReservaCancelable(reserva.date, reserva.startMinute);
                 const formId = `resultado-${reserva.id}`;
 
                 return (
@@ -77,7 +77,8 @@ export default async function MisReservasPage({
                     <td className="py-2 pr-4">{etiquetaFecha(reserva.date)}</td>
                     <td className="py-2 pr-4">{reserva.court.name}</td>
                     <td className="py-2 pr-4">
-                      {reserva.hour}:00 - {reserva.hour + 1}:00
+                      {etiquetaHora(reserva.startMinute)} -{" "}
+                      {etiquetaHora(reserva.startMinute + reserva.durationMinutes)}
                     </td>
 
                     {cancelable ? (

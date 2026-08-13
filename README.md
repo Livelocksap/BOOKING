@@ -8,7 +8,8 @@ de padel (Pista 1 y Pista 2).
 - Alta de socio con nombre, portal, planta, puerta, usuario y contraseña.
 - Ventana de reserva móvil: se puede reservar desde hoy hasta dentro de 2
   días (la ventana avanza sola cada medianoche, hora de Madrid).
-- Horario reservable: de 9:00 a 22:00 en franjas de 1 hora.
+- Horario reservable: de 9:00 a 22:00, en reservas de 1 hora o 1 hora y
+  media (a elegir al reservar).
 - Un socio solo puede tener una reserva activa por día (en cualquiera de las
   2 pistas).
 - Las reservas se pueden cancelar en cualquier momento.
@@ -106,6 +107,8 @@ Prisma vía `@prisma/adapter-libsql`.
 - `lib/db.ts` — cliente Prisma con el adaptador libSQL.
 - `lib/auth.ts` — sesión (iron-session) y hashing de contraseñas.
 - `lib/dates.ts` — ventana de reserva y franjas horarias (huso Europe/Madrid).
+- `lib/timeline.ts` — construye la línea de tiempo de una pista/día (huecos
+  libres, ocupados y demasiado cortos) a partir de sus reservas.
 - `lib/reservations.ts` — lógica de negocio de reservas y cancelaciones.
 - `app/` — páginas (login, registro, reservas, mis-reservas, admin) y sus
   Server Actions.

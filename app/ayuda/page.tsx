@@ -54,8 +54,9 @@ export default function AyudaPage() {
             libera automáticamente un nuevo día para reservar.
           </li>
           <li>
-            Las franjas horarias son de una hora, de {HORA_INICIO}:00 a{" "}
-            {HORA_FIN}:00.
+            El horario reservable es de {HORA_INICIO}:00 a {HORA_FIN}:00, y
+            cada reserva puede durar 1 hora o 1 hora y media: elige la
+            duración al reservar.
           </li>
           <li>
             Cada socio puede tener como máximo una reserva activa por día,
@@ -67,8 +68,8 @@ export default function AyudaPage() {
               Reservas
             </Link>{" "}
             verás cada franja en verde (libre), en azul (tuya) o en gris
-            (ocupada por otro socio). Para reservar, pulsa sobre una franja
-            libre.
+            (ocupada por otro socio o demasiado corta para reservar). Para
+            reservar, pulsa la duración que quieras sobre una franja libre.
           </li>
         </ul>
       </section>

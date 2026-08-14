@@ -1,7 +1,7 @@
 import { requireSocio } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { ventanaReservable, etiquetaFecha, etiquetaHora, esReservaCancelable } from "@/lib/dates";
-import { construirLinea, type Segmento } from "@/lib/timeline";
+import { construirLinea, type Segmento, type SegmentoHueco } from "@/lib/timeline";
 import { reservar, cancelar } from "./actions";
 
 type ReservaSlot = {
@@ -17,7 +17,7 @@ function CeldaSegmento({
   courtId,
   memberIdActual,
 }: {
-  segmento: Segmento<ReservaSlot>;
+  segmento: Exclude<Segmento<ReservaSlot>, SegmentoHueco>;
   fecha: string;
   courtId: string;
   memberIdActual: string;
@@ -59,14 +59,6 @@ function CeldaSegmento({
     );
   }
 
-  if (segmento.tipo === "hueco") {
-    return (
-      <div className="w-full rounded border border-black/10 bg-black/5 px-2 py-1.5 text-center text-sm text-black/30 dark:border-white/10 dark:bg-white/5 dark:text-white/30">
-        {etiquetaHora(segmento.inicioMinuto)}
-      </div>
-    );
-  }
-
   // libre
   if (segmento.pasado) {
     return (
@@ -89,7 +81,7 @@ function CeldaSegmento({
             type="submit"
             className="w-full rounded border border-green-600/40 bg-green-50 px-2 py-1.5 text-sm text-green-800 hover:bg-green-100 dark:border-green-400/30 dark:bg-green-950 dark:text-green-300 dark:hover:bg-green-900"
           >
-            {etiquetaHora(segmento.inicioMinuto)} · {duracion === 60 ? "1h" : "1h30"}
+            {etiquetaHora(segmento.inicioMinuto)} ({duracion} min)
           </button>
         </form>
       ))}
@@ -151,7 +143,9 @@ export default async function ReservasPage({
             <div className="grid grid-cols-2 gap-4">
               {courts.map((court) => {
                 const reservasDia = porPistaDia.get(`${court.id}|${fecha}`) ?? [];
-                const segmentos = construirLinea(fecha, reservasDia);
+                const segmentos = construirLinea(fecha, reservasDia).filter(
+                  (s): s is Exclude<Segmento<ReservaSlot>, SegmentoHueco> => s.tipo !== "hueco"
+                );
 
                 return (
                   <div key={court.id}>

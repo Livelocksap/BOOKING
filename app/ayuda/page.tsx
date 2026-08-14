@@ -68,8 +68,8 @@ export default function AyudaPage() {
               Reservas
             </Link>{" "}
             verás cada franja en verde (libre), en azul (tuya) o en gris
-            (ocupada por otro socio o demasiado corta para reservar). Para
-            reservar, pulsa la duración que quieras sobre una franja libre.
+            (ocupada por otro socio). Para reservar, pulsa la duración que
+            quieras sobre una franja libre.
           </li>
         </ul>
       </section>

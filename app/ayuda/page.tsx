@@ -122,10 +122,14 @@ export default function AyudaPage() {
       </section>
 
       <section>
-        <h2 className="mb-2 text-lg font-medium">¿Algún problema?</h2>
+        <h2 className="mb-2 text-lg font-medium">¿Algún problema o mejora?</h2>
         <p className="text-sm text-black/70 dark:text-white/70">
-          Si tienes dudas sobre tu cuenta o una reserva, contacta con la
-          administración de la comunidad.
+          Si tienes dudas sobre tu cuenta o una reserva, o quieres solicitar
+          una mejora, envía un correo a{" "}
+          <a href="mailto:alberto.sabate@gmail.com" className="underline">
+            alberto.sabate@gmail.com
+          </a>
+          .
         </p>
       </section>
     </div>
